@@ -3,6 +3,8 @@ animated.js
 
 `animated.js` is a jQuery wrapper for Dan Eden's wonderful "animate.css" (https://github.com/daneden/animate.css), supports callbacks and customization.  Animated.js is incredibly easy to use and works on all modern browsers and allows you to deploy powerful CSS3 animations with literally one line of code.
 
+You can view demos of the animations here: http://badbadnotgood.com/animated
+
 ##Usage
 
 To use animated.js simply include it in the `<head>` of your document (as well as animate.css by Dan Eden - https://github.com/daneden/animate.css) and dynamically trigger the animation by using this function:
@@ -58,6 +60,8 @@ Animated.extend({
 ```
 
 ##Example
+
+You can view the animations in action here: http://badbadnotgood.com/animated
 
 Here is an example where the div will fadeOut when the link is clicked and display an alert message.
 
