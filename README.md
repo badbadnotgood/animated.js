@@ -18,7 +18,7 @@ $('#element').animated('animation')
 ```
 $('#element').animated('animation', 
   function() {}, // Callback
-  { duration: '1s', // Also supports floating point, make sure you include s
+  { duration: '1s', // Also supports floating point, make sure you include s (this is because of the css animation syntax)
     delay: '1s', // Delay before the animation is started, once again please include an s
     iterationCount: 10 // How many iterations of the animation before it stops,
     infinite: false // For animations that don't show or hide the element, you can animate them infinitely
@@ -57,8 +57,18 @@ Animated.extend({
 })
 ```
 
+##Example
+
+Here is an example where the div will fadeOut when the link is clicked and display an alert message.
+
+```
+<div id ="element">
+</div>
+
+<a href="#" onclick="$('#element').animated('fadeOut', function() { alert('Faded out!')}, {duration: '3s'})">
+```
+
 ##Animation Names
-####Attention seekers:
 flash
 bounce
 shake
@@ -67,15 +77,11 @@ swing
 wobble
 wiggle
 pulse
-
-####Flippers (currently Webkit, Firefox, &amp; IE10 only):
 flip
 flipInX
 flipOutX
 flipInY
 flipOutY
-
-####Fading entrances:
 fadeIn
 fadeInUp
 fadeInDown
@@ -85,8 +91,6 @@ fadeInUpBig
 fadeInDownBig
 fadeInLeftBig
 fadeInRightBig
-
-####Fading exits:
 fadeOut
 fadeOutUp
 fadeOutDown
@@ -96,40 +100,28 @@ fadeOutUpBig
 fadeOutDownBig
 fadeOutLeftBig
 fadeOutRightBig
-
-####Bouncing entrances:
 bounceIn
 bounceInDown
 bounceInUp
 bounceInLeft
 bounceInRight
-
-####Bouncing exits:
 bounceOut
 bounceOutDown
 bounceOutUp
 bounceOutLeft
 bounceOutRight
-
-####Rotating entrances:
 rotateIn
 rotateInDownLeft
 rotateInDownRight
 rotateInUpLeft
 rotateInUpRight
-
-####Rotating exits:
 rotateOut
 rotateOutDownLeft
 rotateOutDownRight
 rotateOutUpLeft
 rotateOutUpRight
-
-####Lightspeed:
 lightSpeedIn
 lightSpeedOut
-
-####Specials:
 hinge
 rollIn
 rollOut
