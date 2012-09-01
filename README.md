@@ -1,11 +1,11 @@
 animated.js
 ===========
 
-`animated.js` is a jQuery wrapper for Dan Eden's wonderful "animate.css", supports callbacks and customization.  Animated.js is incredibly easy to use and works on all modern browsers.
+`animated.js` is a jQuery wrapper for Dan Eden's wonderful "animate.css" (https://github.com/daneden/animate.css), supports callbacks and customization.  Animated.js is incredibly easy to use and works on all modern browsers and allows you to deploy powerful CSS3 animations with literally one line of code.
 
 ##Usage
 
-To use animated.js simply include it in the `<head>` of your document and dynamically trigger the animation by using this function:
+To use animated.js simply include it in the `<head>` of your document (as well as animate.css by Dan Eden - https://github.com/daneden/animate.css) and dynamically trigger the animation by using this function:
   
 ```
 $('#element').animated('animation')
@@ -69,6 +69,8 @@ Here is an example where the div will fadeOut when the link is clicked and displ
 ```
 
 ##Animation Names
+####Attention seekers:
+```
 flash
 bounce
 shake
@@ -77,11 +79,19 @@ swing
 wobble
 wiggle
 pulse
+```
+
+####Flippers (currently Webkit, Firefox, &amp; IE10 only):
+```
 flip
 flipInX
 flipOutX
 flipInY
 flipOutY
+```
+
+####Fading entrances:
+```
 fadeIn
 fadeInUp
 fadeInDown
@@ -91,6 +101,10 @@ fadeInUpBig
 fadeInDownBig
 fadeInLeftBig
 fadeInRightBig
+```
+
+####Fading exits:
+```
 fadeOut
 fadeOutUp
 fadeOutDown
@@ -100,28 +114,53 @@ fadeOutUpBig
 fadeOutDownBig
 fadeOutLeftBig
 fadeOutRightBig
+```
+
+####Bouncing entrances:
+```
 bounceIn
 bounceInDown
 bounceInUp
 bounceInLeft
 bounceInRight
+```
+
+####Bouncing exits:
+```
 bounceOut
 bounceOutDown
 bounceOutUp
 bounceOutLeft
 bounceOutRight
+```
+
+####Rotating entrances:
+```
 rotateIn
 rotateInDownLeft
 rotateInDownRight
 rotateInUpLeft
 rotateInUpRight
+```
+
+####Rotating exits:
+```
 rotateOut
 rotateOutDownLeft
 rotateOutDownRight
 rotateOutUpLeft
 rotateOutUpRight
+```
+
+####Lightspeed:
+```
 lightSpeedIn
 lightSpeedOut
+```
+
+####Specials:
+```
 hinge
 rollIn
 rollOut
+```
