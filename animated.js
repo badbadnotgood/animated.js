@@ -188,10 +188,11 @@ var Animated = {
   },
   
   extend: function(name, hash) {
-    if ($.isPlainObject(hash)) {
-      $.each(hash, function(k, v) {
+    if ($.isPlainObject(name)) {
+      $.each(name, function(k, v) {
         this.effects[k] = v
       })
+      return;
     }
     this.effects[name] = hash
   }
