@@ -1,3 +1,28 @@
+/**
+ * Animated.js By Matthew A. Tavares
+ * See https://github.com/badbadnotgood/animated.js for documentation
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+
 (function( $ ) {
   $.fn.animated = function(animation, callback, options) {
     
@@ -109,10 +134,10 @@ var Animated = {
     fadeInDown: {show: true},
     fadeInLeft: {show: true},
     fadeInRight: {show: true},
-    fadeInUpBig: {show: true},
-    fadeInDownBig: {show: true},
-    fadeInLeftBig: {show: true},
-    fadeInRightBig: {show: true},
+    fadeInUpBig: {show: true, time: 1000},
+    fadeInDownBig: {show: true, time: 1000},
+    fadeInLeftBig: {show: true, time: 1000},
+    fadeInRightBig: {show: true, time: 1000},
     fadeInUp: {show: true},
     fadeOut: {hide: true},
     fadeOutUp: {hide: true},
@@ -133,11 +158,11 @@ var Animated = {
     bounceOutUp: {hide: true},
     bounceOutLeft: {hide: true},
     bounceOutRight: {hide: true},
-    rotateIn: {show: true},
-    rotateInDownLeft: {show: true},
-    rotateInDownRight: {show: true},
-    rotateInUpLeft: {show: true},
-    rotateInUpRight: {show: true},
+    rotateIn: {show: true, time: 1000},
+    rotateInDownLeft: {show: true, time: 1000},
+    rotateInDownRight: {show: true, time: 1000},
+    rotateInUpLeft: {show: true, time: 1000},
+    rotateInUpRight: {show: true, time: 1000},
     rotateOut: {hide: true},
     rotateOutDownLeft: {hide: true},
     rotateOutDownRight: {hide: true},
