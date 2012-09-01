@@ -160,5 +160,14 @@ var Animated = {
     return $.map(['-webkit-animation-', '-moz-animation-', '-o-animation-', 'animation-'], function(n, i){
       return n + name
     })
+  },
+  
+  extend: function(name, hash) {
+    if ($.isPlainObject(hash)) {
+      $.each(hash, function(k, v) {
+        this.effects[k] = v
+      })
+    }
+    this.effects[name] = hash
   }
 }
