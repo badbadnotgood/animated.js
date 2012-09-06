@@ -40,13 +40,10 @@
       return;
     };
     
-    if (!options) {
-      options = {}
-    }
-    
-    if (jQuery.isPlainObject(callback)) {
-      options = callback
-    };
+    if (!options) options = {} 
+    if (jQuery.isPlainObject(callback)) options = callback
+    if (options.axis) animation = animation + options.axis.toUpperCase()
+    if (options.direction) animation += options.direction.charAt(0).toUpperCase() + options.direction.slice(1);
     
     if (!options.time) {
       options.time = Animated.effects[animation].time ? Animated.effects[animation].time : Animated.defaults.time
@@ -117,18 +114,18 @@
 var Animated = {
   effects: {
     wiggle: {time: 300},
-    wobble: {time: 300},
-    flash: {time: 300},
-    bounce: {time: 300},
+    wobble: {time: 800},
+    flash: {time: 800},
+    bounce: {time: 1000},
     shake: {time: 300},
-    tada: {time: 300},
-    swing: {time: 300},
-    pulse: {time: 300},
+    tada: {time: 800},
+    swing: {time: 800},
+    pulse: {time: 800},
     flip: {},
     flipInX: {show: true},
     flipOutX: {hide: true},
     flipInY: {show: true},
-    flipOutY: {show: true},
+    flipOutY: {hide: true},
     fadeIn: {show: true},
     fadeInUp: {show: true},
     fadeInDown: {show: true},
@@ -175,14 +172,324 @@ var Animated = {
     rollOut: {hide: true}
   },
   
+  effect: {
+    wobble: {
+      keyframes: ["0% { transform: translateX(0%); }", 
+        "15% { transform: translateX(-25%) rotate(-5deg); }", 
+        "30% { transform: translateX(20%) rotate(3deg); }",
+        "45% { transform: translateX(-15%) rotate(-3deg); }",
+        "60% { transform: translateX(10%) rotate(2deg); }",
+        "75% { transform: translateX(-5%) rotate(-1deg); }",
+        "100% { transform: translateX(0%); }" 
+      ], 
+    },
+    
+    pulse: {
+      keyframes: ["0% { transform: scale(1); }",
+        "50% { transform: scale(1.1); }",
+        "100% { transform: scale(1); }"
+      ]
+    },
+    
+    swing: {
+      keyframes: ["20% { transform: rotate(15deg); }",
+        "40% { transform: rotate(-10deg); }",
+        "60% { transform: rotate(5deg); }",
+        "80% { transform: rotate(-5deg); }",
+        "100% { transform: rotate(0deg); }"
+      ],
+      attributes: {
+        'transform-origin': 'top center'
+      }
+    },
+    
+    wiggle: {
+      keyframes: ["0% { transform: skewX(9deg); }",
+        "10% { transform: skewX(-8deg); }",
+        "20% { transform: skewX(7deg); }",
+        "30% { transform: skewX(-6deg); }",
+        "40% { transform: skewX(5deg); }",
+        "50% { transform: skewX(-4deg); }",
+        "60% { transform: skewX(3deg); }",
+        "70% { transform: skewX(-2deg); }",
+        "80% { transform: skewX(1deg); }",
+        "90% { transform: skewX(0deg); }",
+        "100% { transform: skewX(0deg); }"
+      ],
+      attributes: {
+        'animation-timing-function': 'ease-in'
+      }
+    },
+    
+    bounceIn: {
+      keyframes: ["0% { transform: scale(.3); opacity: 0; }",
+      	"50% { transform: scale(1.05); opacity: 1; }",
+        "70% { transform: scale(.9); }",
+        "100% { transform: scale(1); }"
+      ]
+    },
+    
+    bounceInUp: {
+      keyframes: [
+        "0% { opacity: 0; transform: translateY(2000px); }",
+        "60% { opacity: 1; transform: translateY(-30px); }",
+        "80% { transform: translateY(10px); }",
+      	"100% { transform: translateY(0); }"
+      ]
+    },
+    
+    bounceInDown: {
+      keyframes: ["0% { opacity: 0; transform: translateY(-2000px); }",
+      	"60% { opacity: 1; transform: translateY(30px); }",
+      	"80% { transform: translateY(-10px); }",
+      	"100% { transform: translateY(0); }"
+      ]
+    },
+    
+    bounceInLeft: {
+      keyframes: ["0% { opacity: 0; transform: translateX(-2000px); }",
+      	"60% { opacity: 1; transform: translateX(30px); }",
+      	"80% { transform: translateX(-10px); }",
+        "100% { transform: translateX(0);}"
+      ]
+    },
+    
+    bounceInRight: {
+      keyframes: ["0% { opacity: 0; transform: translateX(2000px); }",
+      	"60% { opacity: 1; transform: translateX(-30px); }",
+      	"80% { transform: translateX(10px); }",
+      	"100% { transform: translateX(0); }"
+      ]
+    },
+    
+    bounceOut: {
+      keyframes: ["0% { transform: scale(1); }",
+      	"25% { transform: scale(.95); }",
+      	"50% { opacity: 1; transform: scale(1.1); }",
+      	"100% { opacity: 0; transform: scale(.3); }"
+      ]
+    },
+    
+    bounceOutUp: {
+      keyframes: ["0% { transform: translateY(0); }",
+      	"20% { opacity: 1; transform: translateY(20px); }",
+      	"100% { opacity: 0; transform: translateY(-2000px); }"
+      ]
+    },
+    
+    bounceOutDown: {
+      keyframes: ["0% { transform: translateY(0); }",
+        "20% { opacity: 1; transform: translateY(-20px); }",
+      	"100% { opacity: 0; transform: translateY(2000px); }"
+      ]
+    },
+    
+    bounceOutLeft: {
+      keyframes: ["0% { transform: translateX(0); }",
+      	"20% { opacity: 1; transform: translateX(20px); }",
+      	"100% { opacity: 0; transform: translateX(-2000px); }"
+      ]
+    },
+    
+    bounceOutRight: {
+      keyframes: ["0% { transform: translateX(0); }",
+      	"20% { opacity: 1; transform: translateX(-20px); }",
+      	"100% { opacity: 0; transform: translateX(2000px); }"
+      ]
+    },
+    
+    rollIn: {
+      keyframes: ["0% { opacity: 0; transform: translateX(-100%) rotate(-120deg); }",
+      	"100% { opacity: 1; transform: translateX(0px) rotate(0deg); }"
+      ]
+    },
+    
+    rollOut: {
+      keyframes: ["0% { opacity: 1; transform: translateX(0px) rotate(0deg); }",
+        "100% { opacity: 0; transform: translateX(100%) rotate(120deg); }"
+      ]
+    },
+    
+    flash: {
+      keyframes: {
+        0: 'opacity: 1',
+        25: 'opacity: 0',
+        50: 'opacity: 1',
+        75: 'opacity: 0',
+        100: 'opacity: 1'
+      }
+    },
+    
+    shake: {
+      keyframes: ["0%, 100% { transform: translateX(0); }",
+      	"10%, 30%, 50%, 70%, 90% { transform: translateX(-10px);}",
+      	"20%, 40%, 60%, 80% { transform: translateX(10px);}"
+      ]
+    },
+    
+    bounce: {
+      keyframes: ["0%, 20%, 50%, 80%, 100% { transform: translateY(0);}",
+    	  "40% { transform: translateY(-30px);}",
+    	  "60% { transform: translateY(-15px);}"
+      ]
+    },
+    
+    tada: {
+      keyframes: ["0% { transform: scale(1);}",
+      	"10%, 20% { transform: scale(0.9) rotate(-3deg);}",
+      	"30%, 50%, 70%, 90% { transform: scale(1.1) rotate(3deg);}",
+      	"40%, 60%, 80% { transform: scale(1.1) rotate(-3deg);}",
+      	"100% { transform: scale(1) rotate(0);}"
+      ]
+    },
+    
+    flip: {
+      keyframes: ["0% { transform: perspective(400px) rotateY(0); animation-timing-function: ease-out; }",
+        "40% { transform: perspective(400px) translateZ(150px) rotateY(170deg); animation-timing-function: ease-out; }",
+        "50% { transform: perspective(400px) translateZ(150px) rotateY(190deg) scale(1); animation-timing-function: ease-in; }",
+        "80% { transform: perspective(400px) rotateY(360deg) scale(.95); animation-timing-function: ease-in; }",
+        "100% { transform: perspective(400px) scale(1); animation-timing-function: ease-in; }"
+      ],
+      attributes: {
+        'backface-visibility': 'visible !important'
+      }
+    },
+    
+    flipInX: {
+      keyframes: ["0% { transform: perspective(400px) rotateX(90deg); opacity: 0; }",
+        "40% { transform: perspective(400px) rotateX(-10deg); }",
+        "70% { transform: perspective(400px) rotateX(10deg); }",
+        "100% { transform: perspective(400px) rotateX(0deg); opacity: 1; }"
+      ],
+      attributes: {
+        'backface-visibility': 'visible !important'
+      }
+    },
+    
+    flipOutX: {
+      keyframes: ["0% { transform: perspective(400px) rotateX(0deg); opacity: 1; }",
+        "100% { transform: perspective(400px) rotateX(90deg); opacity: 0; }"
+      ],
+      attributes: {
+        'backface-visibility': 'visible !important'
+      }
+    },
+    
+    flipInY: {
+      keyframes: ["0% { transform: perspective(400px) rotateY(90deg); opacity: 0; }",
+        "40% { transform: perspective(400px) rotateY(-10deg); }",
+        "70% { transform: perspective(400px) rotateY(10deg); } ",
+        "100% { transform: perspective(400px) rotateY(0deg); opacity: 1; }"
+      ],
+      attributes: {
+        'backface-visibility': 'visible !important'
+      }
+    },
+    
+    flipOutY: {
+      keyframes: ["0% { transform: perspective(400px) rotateY(0deg); opacity: 1; }",
+        "100% { transform: perspective(400px) rotateY(90deg); opacity: 0; }"
+      ],
+      attributes: {
+        'backface-visibility': 'visible !important'
+      }
+    },
+    
+    fadeIn: {
+      keyframes: {
+        0: 'opacity: 0',	
+      	100: 'opacity: 1'
+      }
+    },
+    
+    fadeInUp: {
+      keyframes: ["0% { opacity: 0; transform: translateY(20px); }",
+        "100% { opacity: 1; transform: translateY(0); }"
+      ]
+    },
+    
+    fadeInDown: {
+      keyframes: ["0% { opacity: 0; transform: translateY(-20px); }",
+        "100% { opacity: 1; transform: translateY(0); }"
+      ]
+    },
+    
+    fadeInLeft: {
+      keyframes: ["0% { opacity: 0; transform: translateX(-20px); }",
+        "100% { opacity: 1; transform: translateX(0); }"
+      ]
+    },
+    
+    fadeInRight: {
+      keyframes: ["0% { opacity: 0; transform: translateX(20px); }",
+        "100% { opacity: 1; transform: translateX(0); }"
+      ]
+    },
+    
+    fadeOut: {
+      keyframes: ["0% {opacity: 1;}",
+        "100% {opacity: 0;}"
+      ]
+    },
+    
+    fadeOutUp: {
+      keyframes: ["0% { opacity: 1; transform: translateY(0); }",
+        "100% { opacity: 0; transform: translateY(-20px); }"
+      ]
+    },
+    
+    fadeOutDown: {
+      keyframes: ["0% { opacity: 1; transform: translateY(0); }",
+      	"100% { opacity: 0; transform: translateY(20px); }"
+      ]
+    },
+    
+    fadeOutLeft: {
+      keyframes: ["0% { opacity: 1; transform: translateX(0); }",
+        "100% { opacity: 0; transform: translateX(-20px); }"
+      ]
+    },
+    
+    fadeOutRight: {
+      keyframes: ["0% { opacity: 1; transform: translateX(0); }",
+        "100% { opacity: 0; transform: translateX(20px); }"
+      ]
+    },
+    
+    hinge: {
+      keyframes: ["0% { transform: rotate(0); transform-origin: top left; animation-timing-function: ease-in-out; }",
+        "20%, 60% { transform: rotate(80deg); transform-origin: top left; animation-timing-function: ease-in-out; }",
+        "40% { transform: rotate(60deg); transform-origin: top left; animation-timing-function: ease-in-out; }",
+        "80% { transform: rotate(60deg) translateY(0); opacity: 1; transform-origin: top left; animation-timing-function: ease-in-out; }",
+        "100% { transform: translateY(700px); opacity: 0; }"
+      ],
+      attributes: {
+        'animation-duration': '2s'
+      }
+    }
+  },
+  
   defaults: {
-    time: 800,
+    time: 1000,
     hide: false,
     show: false
   },
   
+  _default: {
+    'animation-duration': '1s',
+    'animation-fill-mode': 'both'
+  },
+  
+  style: null,
+  
   vendorPrefixFor: function(name) {
     return $.map(['-webkit-animation-', '-moz-animation-', '-o-animation-', 'animation-'], function(n, i){
+      return n + name
+    })
+  },
+  
+  _vendorPrefixForKeyFrames: function(name) {
+    return $.map(['-webkit-', '-moz-', '-o-', ''], function(n, i){
       return n + name
     })
   },
@@ -195,5 +502,100 @@ var Animated = {
       return;
     }
     this.effects[name] = hash
-  }
+  },
+  
+  keyframes: function(name, keyframes) {
+    keys = $.map(['-webkit-', '-moz-', '-o-', ''], function(n, i) {
+      c = "@" + n + "keyframes " + name
+      rule = ""
+      if ($.isPlainObject(keyframes)) {
+        $.each(keyframes, function(k, v) {
+          rule += k + "% " + "{ " + v + "; }\n"
+        })
+      } else {
+        $.each(keyframes, function(v, k) {
+          if (k.indexOf("animation") != -1) {
+            k = k.splice(k.indexOf("animation"), 0, n)
+          }
+          if (k.indexOf("transform-origin") != -1) {
+            k = k.splice(k.indexOf("transform-origin"), 0, n)
+          }
+          p = k.indexOf("transform")
+          rule += k.splice(p, 0, n) + "\n"
+        })
+      }
+      obj = {}
+      obj[c] = rule
+      return obj
+    })
+    return keys
+  },
+  
+  animation: function(name, attr) {
+    this.effect[name] = attr
+  },
+  
+  _add: function(name, keyframes, attributes) {
+    keys = this.keyframes(name, keyframes)
+    $.each(keys, function(k, v) {
+      $.each(v, function(a, b) {
+        Animated._rule(a, b)
+      })
+    })
+    c = this._createClass(name, attributes)
+    $.each(c, function(k, v) {
+      Animated._rule(k, v)
+    })
+  },
+  
+  _createClass: function(name, attributes) {
+    c = "." + name
+    rule = ""
+    $.each(['-webkit-', '-moz-', '-o-', ''], function(k, v) {
+      rule += v + "animation-name:" + name + ";"
+      if ($.isPlainObject(attributes)) {
+        $.each(attributes, function(attr_name, attr_value) {
+          rule += v + attr_name + ":" + attr_value + ";"
+        })
+      }
+    })
+    obj = {}
+    obj[c] = rule
+    return obj
+  },
+  
+  _rule: function(name, rule) {
+    this.style.append(name + " { " + rule + " } \n")
+  },
+  
+  load: function() {
+    this.style = $('<style>', {
+      type: 'text/css',
+      rel: 'stylesheet',
+      media: 'screen',
+      id: 'test'
+    })
+    $("head").append(this.style)
+    
+    default_rule = ""
+    $.each(['-webkit-', '-moz-', '-o-', ''], function(k, v) {
+      $.each(Animated._default, function(a, b) {
+        default_rule += v + a + ":" + b + ";"
+      })
+    })
+    
+   Animated._rule('.animated', default_rule)
+    
+    $.each(this.effect, function(k, v) {
+      Animated._add(k, v.keyframes, v.attributes)
+    })
+  },
 }
+
+$(document).ready(function() {
+  Animated.load()
+})
+
+String.prototype.splice = function( idx, rem, s ) {
+    return (this.slice(0,idx) + s + this.slice(idx + Math.abs(rem)));
+};

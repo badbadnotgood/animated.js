@@ -1,16 +1,22 @@
 animated.js
 ===========
 
-`animated.js` is a jQuery wrapper for Dan Eden's wonderful "animate.css" (https://github.com/daneden/animate.css), supports callbacks and customization.  Animated.js is incredibly easy to use and works on all modern browsers and allows you to deploy powerful CSS3 animations with literally one line of code.
+`animated.js` is a CSS3 animation framework for jQuery, it comes loaded with a bunch of ready-go animations curtesy Dan Eden's animate.css (https://github.com/daneden/animate.css) and is super easy to use and customize.  By the way it's only 13kb minified!
 
 You can view demos of the animations here: http://badbadnotgood.com/animated
 
 ##Usage
 
-To use animated.js simply include it in the `<head>` of your document (as well as animate.css by Dan Eden - https://github.com/daneden/animate.css) and dynamically trigger the animation by using this function:
+To use animated.js simply include it in the `<head>` of your document, thats it!  (Also ya gotta have jQuery).  You can run an animation like so:
   
 ```
 $('#element').animated('animation')
+```
+
+And even pass it some complex options:
+
+```
+$('#element').animated('fadeIn', function() { alert("faded in!") }, {direction: 'up', delay: '2s', duration: '3s'})
 ```
 
 ##Advanced
@@ -22,8 +28,10 @@ $('#element').animated('animation',
   function() {}, // Callback
   { duration: '1s', // Also supports floating point, make sure you include s (this is because of the css animation syntax)
     delay: '1s', // Delay before the animation is started, once again please include an s
-    iterationCount: 10 // How many iterations of the animation before it stops,
-    infinite: false // For animations that don't show or hide the element, you can animate them infinitely
+    iterationCount: 10, // How many iterations of the animation before it stops,
+    infinite: false, // For animations that don't show or hide the element, you can animate them infinitely
+    direction: 'up', // Up / Down / Left / Right, only works on some animations
+    axis: 'y' // y / x, works when the animation involves a flip
 })
 
 // You can also just supply options or just supply a callback
@@ -42,21 +50,41 @@ $('#element').animated(false)
 
 ####Extending animate.js
 
-If you want to write your own animations and execute them through animated.js you can by adding this function to the `<head>` of your document.
+Writing your own animations has never been simpler!  Now you can create your own CSS3 animations that are cross-browser friendly by never even touching CSS.  Simply use the `Animated.animation()` feature and pass in your keyframes, see the example below:
   
 ```
-Animated.extend('animationName', {
-  time: 800, // Duration of the animation
-  show: true, // Show the element while animating?
-  hide: true // Hide the element after animating?
+Animated.animation('myNewAnimation', {
+  keyframes: ["20% { transform: rotate(15deg); }", // Keyframes are automatically parsed with vendor prefixes
+    "40% { transform: rotate(-10deg); }",
+    "60% { transform: rotate(5deg); }",
+    "80% { transform: rotate(-5deg); }",
+    "100% { transform: rotate(0deg); }"
+  ],
+  attributes: {
+    'transform-origin': 'top center' // These are additional attributes that are not part of the keyframes
+  },
+  options: {
+    time: 800, // Amount of time in milliseconds the animation will take, defaults to 1 second
+    hide: true // Hide the element after animation?
+  }
+})
+```
+
+Now with this example you can call your custom animation anytime you want and extend it the way you would with any other animation!
+
+```
+$("#element").animated('myNewAnimation', {duration: '3s'})
+```
+
+Its that easy, no more `-moz-` && `-web-kit` prefixs, no more redundant (and large) CSS files... You can even specify your own directions and axis by appending `Up / Down / Left / Right` or `X / Y` to your animation name.  Example:
+
+```
+Animated.animation('myNewAnimationX', {
+  // Your keyframes and options etc here
 })
 
-// You can also supply a hash of multiple animations
-
-Animated.extend({
-  animationOne: {},
-  animationTwo: {}
-})
+// You can now call this specific axis with:
+$("#element").animated("myNewAnimation", {axis: 'x'})
 ```
 
 ##Example
@@ -88,78 +116,38 @@ pulse
 ####Flippers (currently Webkit, Firefox, &amp; IE10 only):
 ```
 flip
-flipInX
-flipOutX
-flipInY
-flipOutY
+flipIn
+flipOut
+
+Note: you can supply X or Y in the axis option with these animations
 ```
 
 ####Fading entrances:
 ```
 fadeIn
-fadeInUp
-fadeInDown
-fadeInLeft
-fadeInRight
-fadeInUpBig
-fadeInDownBig
-fadeInLeftBig
-fadeInRightBig
+
+Note: you can supply Up / Down / Left / Right in the direction option with these animations
 ```
 
 ####Fading exits:
 ```
 fadeOut
-fadeOutUp
-fadeOutDown
-fadeOutLeft
-fadeOutRight
-fadeOutUpBig
-fadeOutDownBig
-fadeOutLeftBig
-fadeOutRightBig
+
+Note: you can supply Up / Down / Left / Right in the direction option with these animations
 ```
 
 ####Bouncing entrances:
 ```
 bounceIn
-bounceInDown
-bounceInUp
-bounceInLeft
-bounceInRight
+
+Note: you can supply Up / Down / Left / Right in the direction option with these animations
 ```
 
 ####Bouncing exits:
 ```
 bounceOut
-bounceOutDown
-bounceOutUp
-bounceOutLeft
-bounceOutRight
-```
 
-####Rotating entrances:
-```
-rotateIn
-rotateInDownLeft
-rotateInDownRight
-rotateInUpLeft
-rotateInUpRight
-```
-
-####Rotating exits:
-```
-rotateOut
-rotateOutDownLeft
-rotateOutDownRight
-rotateOutUpLeft
-rotateOutUpRight
-```
-
-####Lightspeed:
-```
-lightSpeedIn
-lightSpeedOut
+Note: you can supply Up / Down / Left / Right in the direction option with these animations
 ```
 
 ####Specials:
