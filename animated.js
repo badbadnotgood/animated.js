@@ -533,6 +533,7 @@ var Animated = {
   
   animation: function(name, attr) {
     this.effect[name] = attr
+    this.effects[name] = attr.options
   },
   
   _add: function(name, keyframes, attributes) {
